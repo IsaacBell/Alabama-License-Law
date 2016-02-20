@@ -1,0 +1,8 @@
+
+New rules imported.
+Change icon for text resizing.
+
+Fix android landscape issue.
+Help with formatting issues in content.
+Contrast issue with text.
+

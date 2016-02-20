@@ -1,0 +1,37 @@
+
+<h1>New Law</h1>
+
+<form action='/admin/laws/add' method='post' id='law_form'>
+<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>' />
+<p><input type='text' name='legal_id' id='legal_id' placeholder='Legal ID' style='width: 500px;' /></p>
+<div id='message'></div>
+<p>
+<input type='button' value='< Back' onclick="window.location='/admin/laws';" />
+<input type='submit' value='Add New Law' onclick="add_law(); return false;" />
+</p>
+</form>
+
+<% content_for :caboose_js do %>
+<script type='text/javascript'>
+
+function add_law()
+{
+  $('#message').html("<p class='loading'>Adding law...</p>");
+  $.ajax({
+    url: '/admin/laws',
+    type: 'post',
+    data: $('#law_form').serialize(),
+    success: function(resp) {
+      if (resp.error) $('#message').html("<p class='note error'>" + resp.error + "</p>");
+      if (resp.redirect) window.location = resp.redirect;
+    }
+  });
+}
+
+var modal = false;
+$(window).load(function() {
+  modal = new CabooseModal(800);
+});
+
+</script>
+<% end %>

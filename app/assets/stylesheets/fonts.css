@@ -1,0 +1,47 @@
+@font-face {
+	font-family: 'Oxygen';
+	src: url('/assets/Oxygen.eot');
+	src: url('/assets/Oxygen.woff') format('woff'), url('/assets/Oxygen.ttf') format('truetype'), url('/assets/Oxygen.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Futura-Light';
+	src: url('/assets/Futura-Light.eot');
+	src: url('/assets/Futura-Light.woff') format('woff'), url('/assets/Futura-Light.ttf') format('truetype'), url('/assets/Futura-Light.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Oxygen';
+	src: url('/assets/Oxygen-Bold.eot');
+	src: url('/assets/Oxygen-Bold.woff') format('woff'), url('/assets/Oxygen-Bold.ttf') format('truetype'), url('/assets/Oxygen-Bold.svg') format('svg');
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Oxygen';
+	src: url('/assets/Oxygen-BoldItalic.eot');
+	src: url('/assets/Oxygen-BoldItalic.woff') format('woff'), url('/assets/Oxygen-BoldItalic.ttf') format('truetype'), url('/assets/Oxygen-BoldItalic.svg') format('svg');
+	font-weight: bold;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'Oxygen';
+	src: url('/assets/Oxygen-Italic.eot');
+	src: url('/assets/Oxygen-Italic.woff') format('woff'), url('/assets/Oxygen-Italic.ttf') format('truetype'), url('/assets/Oxygen-Italic.svg') format('svg');
+	font-weight: normal;
+	font-style: italic;
+}
+
+.font-oxygen {
+	font-family: "Oxygen";
+}
+
+.font-futura {
+	font-family: "Futura-Light";
+}

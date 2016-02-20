@@ -1,0 +1,47 @@
+
+<h1>Laws</h1>
+
+<style type='text/css'>
+#search_form_wrapper { margin-bottom: 10px; position: absolute; top:0; right: 0; }
+</style>
+
+<p><a href='/admin/laws/new'><span>New Law</span></a></p>
+
+<div id='search_form_wrapper'>
+  <form action='/admin/laws' method='get' id='search_form'>    
+    <input type='text' name='legal_id_like' placeholder='Legal ID' value="<%= @gen.params['legal_id_like'] %>" style='width: 150px;' />
+    <input type='text' name='title_like'    placeholder='Title'    value="<%= @gen.params['title_like']    %>" style='width: 150px;' />    
+    <input type='submit' value='Search' />        
+  </form>
+</div>
+
+<% if @laws.count > 0 %>
+  <table class='data' id='properties_table'>
+    <tr>
+      <%= raw @gen.sortable_table_headings({
+  				'legal_id'  => 'Legal ID',
+  				'title'     => 'Title',
+  				'content'   => 'Content'				
+  			})
+  		%>
+    </tr>
+  <% @laws.each do |law| %>    
+    <tr onclick="window.location='/admin/laws/<%= law.id %>';">
+      <td><%= raw law.legal_id  %></td>
+      <td><%= raw law.title     %></td>
+      <td><%= raw Caboose.teaser_text(law.content, 200) %></td>    
+    </tr>
+  <% end %>
+  </table>
+  <p><%= raw @gen.generate %></p>
+<% else %>
+  <p>There are no laws right now.</p>
+<% end %>
+
+<% content_for :caboose_js do %>
+<script type='text/javascript'>
+$(document).ready(function() { 
+  var modal = new CabooseModal(800);
+});
+</script>
+<% end %>

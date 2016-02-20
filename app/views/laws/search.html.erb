@@ -1,0 +1,57 @@
+<%= render partial: "layouts/sidebar", object: @user, :as => "user" %>
+<div id='dark' style='display: none;'></div>
+<div class="wrapper">
+<%= render "layouts/header" %>
+	<div class="content">
+		<span class="law-legalid">Search Results</span><br><br>
+		<% if @laws.size == 0 %>
+			<p>Sorry, no results were found.</p>
+		<% else %>
+		<% @laws.each do |law| %>
+			<a href="/laws/<%= law.legal_id %>"><p><%= law.legal_id %></a> - <%= law.title %></p>
+		<% end %>
+		<% end %>
+	</div>
+</div>
+
+
+<%= content_for :caboose_js do %>
+<% if @is_logged_in %>
+	<script type='text/javascript'>
+	</script>
+<% else %>
+	<script type='text/javascript'>
+		$("#login_btn").click(function(event) {
+			event.preventDefault(); 
+			open_colorbox(); 
+		}); 
+
+		function open_colorbox() {
+		  $.colorbox({
+		    href: '/login?return_url=/laws',
+		    iframe: true,
+		    innerWidth: 200,
+		    innerHeight:  50,
+		    scrolling: false,
+		    transition: 'fade',
+		    closeButton: false,
+		    onComplete: fix_colorbox,
+		    opacity: 0.50,
+		  //  onClosed: function() { open_colorbox(); }   
+		  });
+		}
+
+		function fix_colorbox() {
+		  $("#cboxTopLeft"      ).css('background', '#111');
+		  $("#cboxTopRight"     ).css('background', '#111');
+		  $("#cboxBottomLeft"   ).css('background', '#111');
+		  $("#cboxBottomRight"  ).css('background', '#111');
+		  $("#cboxMiddleLeft"   ).css('background', '#111');
+		  $("#cboxMiddleRight"  ).css('background', '#111');
+		  $("#cboxTopCenter"    ).css('background', '#111');
+		  $("#cboxBottomCenter" ).css('background', '#111');
+		  $("#cboxClose"        ).hide(); 
+		}
+	</script>
+<% end %>
+<% end %>

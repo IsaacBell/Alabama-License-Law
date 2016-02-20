@@ -1,0 +1,38 @@
+<%
+cats = get_categories
+%>
+<div id="sidr" style="display:none">
+	<div class="buttons">
+		<div class="button" id="show_bookmarks"><img src="/assets/bookmark.png"></div>
+		<div class="button" id="show_pages"><img src="/assets/pages.png"></div>
+		<!--<div class="button"><img src="/assets/paperclip.png"></div>-->
+		<!--<div style='float: right; margin-right: 16px;'><a id="close-sidebar" href="#"><div class="button" id="close-sidr"><span id="close">X</span></div></a></div>-->
+	</div>
+	<form>
+		<input type="text" placeholder="FILTER" id="filter">
+	</form>
+	<ul id="sections">
+	  <% cats.each do |cat| %>
+	    <li>
+	      <a href="#" onclick="return false;" class="section-title expand">
+	      	<%= cat.title %>
+	      </a>
+	      <ul>
+	        <% cat.laws.order("position").each do |law| %>
+	          <li>
+	          	<a href="/laws/<%= law.legal_id %>" data-fulltitle="<%= law.title %>" class="subsection-title"><%= law.legal_id %>. <%= law.title.truncate(20) %></a>
+	          </li>
+	        <% end %>
+	      </ul>
+	    </li>
+	  <% end %>
+	</ul>
+	<div id="bookmarks_list" style="display:none">
+		<% if @user %>
+		  <span class="section-title">My Saved Laws</span>
+		  <ul id='bookmarks'></ul>
+		<% else %>
+			<p>Please login to view bookmarks.</p>
+		<% end %>
+	</div>
+</div>

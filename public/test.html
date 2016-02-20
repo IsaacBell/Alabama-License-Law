@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type='text/css'>
+ol { list-style-type: none; }
+ol li:first-of-type { counter-reset: section;}
+ol li { counter-increment: section; }
+ol[type='I'] > li:before { content: "(" counter(section, upper-roman) ") "; }
+ol[type='i'] > li:before { content: "(" counter(section, lower-roman) ") "; }
+ol[type='A'] > li:before { content: "(" counter(section, upper-alpha) ") "; }
+ol[type='a'] > li:before { content: "(" counter(section, lower-alpha) ") "; }
+ol[type='1'] > li:before { content: "(" counter(section, decimal) ") "; }
+</style>
+<script type="text/javascript" src="/assets/jquery.js"></script>
+</head>
+<body>
+<ol type="I">
+  <li>Coffee
+    <ol type="1">
+      <li>Coffee
+        <ol type="a">
+          <li>Coffee</li>
+          <li>Tea
+            <ol type="a">
+              <li>Coffee</li>
+              <li>Tea</li>
+              <li>Coca Cola</li>
+            </ol>          
+          </li>
+          <li>Test 1</li>
+          <li>Test 2</li>
+        </ol>
+      </li>
+      <li>Test 1</li>
+      <li>Test 2</li>
+    </ol>
+  </li>
+  <li>Test 1</li>
+  <li>Coffee
+    <ol type="1">
+      <li>Coffee
+        <ol type="a">
+          <li>Coffee</li>
+          <li>Tea
+            <ol type="a">
+              <li>Coca Cola
+              <li>Coffee
+                <ol type="1">
+                  <li>Coffee
+                    <ol type="a">
+                      <li>Coffee</li>
+                      <li>Tea
+                        <ol type="a">
+                          <li>Coffee</li>
+                          <li>Tea</li>
+                          <li>Coca Cola</li>
+                        </ol>          
+                      </li>
+                      <li>Test 1</li>
+                      <li>Test 2</li>
+                    </ol>
+                  </li>
+                  <li>Test 1</li>
+                  <li>Test 2</li>
+                </ol>
+              </li>
+              <li>Test 1</li>
+              <li>Test 2</li>
+              </li>
+            </ol>          
+          </li>
+          <li>Test 1</li>
+          <li>Test 2</li>
+        </ol>
+      </li>
+      <li>Test 1</li>
+      <li>Test 2</li>
+    </ol>
+  </li>
+  <li>Test 1</li>
+  <li>Test 2</li>
+</ol>
+</body>
+</html>

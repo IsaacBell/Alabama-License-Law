@@ -1,0 +1,72 @@
+<%= render "layouts/homeheader" %>
+<div class="center-box" id="signup">
+	<h1>SIGN UP NOW</h1>
+	<p class='font-oxygen'>For a completely custom-tailored License Law experience.</p><br>
+<!--	<input id="register-email" type="email" placeholder="Email Address"><br /> --> 
+	<button class="color_btn" style="width: 200px;" id="submit-email">LOGIN/REGISTER</button>
+	<button class="color_btn" style="width: 150px;" id="submit-email" onclick="window.location='/laws';">VIEW LAWS</button>
+</div>
+
+<div class="shadow-box">
+	<div class="grid-row">
+		<div class="grid-unit-1of3 icon-box">
+			<img src="/assets/bookmark.png" class="icon">
+			<h3>Bookmarks</h3>
+			<p>Now featuring the ability to bookmark and save the law that you use the most.  Easily access it from your desktop to your mobile by just logging into the app.</p>
+		</div>
+		<div class="grid-unit-1of3 icon-box" onclick="window.location='https://epay.ua.edu/C20219_ustores/web/product_detail.jsp?PRODUCTID=323&SINGLESTORE=true';">
+			<img src="/assets/book.png" class="icon">
+			<h3>License Law</h3>
+			<p>The License Law book can be purchased from the <a href="https://epay.ua.edu/C20219_ustores/web/store_cat.jsp?STOREID=8&CATID=80&SINGLESTORE=true">online store</a>. Or Call 205.348.4117 to order.</p>
+		</div>
+		<div class="grid-unit-1of3 icon-box">
+			<img src="/assets/lightbulb.png" class="icon">
+			<h3>Backlit Reading</h3>
+			<p>The new app provides you the ability to control the level of light for your reading convenience in low lit areas.</p>
+		</div>
+	</div>
+</div>
+
+
+
+
+<%= content_for :caboose_js do %>
+<% if @is_logged_in %>
+	<script type='text/javascript'>
+		window.location = "/laws";
+	</script>
+<% else %>
+	<script type='text/javascript'>
+		$("#submit-email").click(function() {
+			open_colorbox(); 
+		}); 
+
+		function open_colorbox() {
+		  $.colorbox({
+		    href: '/register?return_url=/laws',
+		    iframe: true,
+		    innerWidth: 200,
+		    innerHeight:  50,
+		    scrolling: false,
+		    transition: 'fade',
+		    closeButton: false,
+		    onComplete: fix_colorbox,
+		    opacity: 0.50,
+		  //  onClosed: function() { open_colorbox(); }   
+		  });
+		}
+
+		function fix_colorbox() {
+		  $("#cboxTopLeft"      ).css('background', '#111');
+		  $("#cboxTopRight"     ).css('background', '#111');
+		  $("#cboxBottomLeft"   ).css('background', '#111');
+		  $("#cboxBottomRight"  ).css('background', '#111');
+		  $("#cboxMiddleLeft"   ).css('background', '#111');
+		  $("#cboxMiddleRight"  ).css('background', '#111');
+		  $("#cboxTopCenter"    ).css('background', '#111');
+		  $("#cboxBottomCenter" ).css('background', '#111');
+		  $("#cboxClose"        ).hide(); 
+		}
+	</script>
+<% end %>
+<% end %>

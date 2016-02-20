@@ -1,0 +1,27 @@
+<h1>Hello, rails!</h1>
+
+<p>Name: <input type='text' name='name' id='name' value='' /></p>
+
+<p><input type='submit' value='Submit' onclick='send_name(); return false;' /></p>
+
+<%= content_for :js do %>
+
+<script type='text/javascript'>
+
+function send_name()
+{
+  var name = $('#name').val();
+  $.ajax({
+    url: '/form-process',
+    data: {
+      name: name
+    },
+    success: function(resp) {
+    
+    }
+  });    
+}
+
+</script>
+
+<% end %>

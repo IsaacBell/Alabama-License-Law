@@ -1,0 +1,47 @@
+<header>
+	<a class="menu-btn"></a>
+	
+	<div class="header-wrapper">
+		<a href="/">
+			<img src="/assets/logo.png" class="logo" alt="License Law">
+			<span class="subtitle">LICENSE LAW</span>
+		</a>
+		
+		<a id="top-menu" href="#">
+			<span id="arrow">&#x25BC;</span>
+			<% if @user.nil? %>
+				<div class="profile-image" style="background-image: url('/assets/blank_profile.png');"></div>
+				<span id="username">Guest</span>
+			<% else %> 
+			  <% hash = Digest::MD5.hexdigest(@user.email) %>
+				<div class="profile-image" style="background-image: url('http://www.gravatar.com/avatar/<%= hash %>');"></div>
+				<span id="username">Menu</span>
+			<% end %>
+		</a>
+		<form class="search-form" method="get" action="/laws/search">
+			<input id="search-input" name="query" type="text" placeholder="Search">
+			<input type="submit" value="Search" style="display:none">
+		</form>
+		<% opacity = session[:bulb_opacity] ? session[:bulb_opacity] : 0.5 %>
+		<a id="lights"><img src="/assets/bulb.png" id="bulb" style="opacity: <%= opacity %>"></a>		
+		<a id="magnify"><img id="zoom" src="/assets/magnify.png" alt=""></a>
+		<div id="nav" style="display:none;">
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="#" id="browse">Browse</a></li>
+				<li><a href="http://arec.alabama.gov/commission/about">About AREC</a></li>
+				<li><a href="#" id='profile'>Profile</a></li>
+				<% if @user.nil? %>
+					<li><a id="login_btn" href="/login">Login</a></li>
+				<% else %>
+					<li><a id="logout_btn" href="/logout">Logout</a></li>
+				<% end %>
+				<form id="menu-search-form" class="conceal search-form" method="get" action="/laws/search">
+					<input id="search-input-lower" name="query" type="text" placeholder="Search">
+					<img id="search-submit" src="/assets/search.png" alt="Search">
+					<input type="submit" value="Search" style="display:none">
+				</form>
+			</ul>
+		</div>
+	</div>
+</header>

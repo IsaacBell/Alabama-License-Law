@@ -1,0 +1,159 @@
+<%= render partial: "layouts/sidebar", object: @user, :as => "user" %>
+<div id='dark' style='display: none;'></div>
+<div class="wrapper">
+<%= render "layouts/header" %>
+	<div class="content">
+		<% if @law %>
+		  <% if @bookmark.nil? %>
+        <a id="add_bookmark">
+          <img class="bookmark" src="/assets/bookmark.png" width="50px"></a>
+        <a id="remove_bookmark" style="display:none">
+          <img class="bookmark" src="/assets/bookmark.png" width="50px" style="opacity:1.0"></a>
+		  <% else %>
+        <a id="add_bookmark" style="display:none">
+          <img class="bookmark" src="/assets/bookmark.png" width="50px"></a>
+        <a id="remove_bookmark">
+          <img class="bookmark" src="/assets/bookmark.png" width="50px" style="opacity:1.0"></a>
+		  <% end %>			
+			<!--
+			<span class="law-legalid">§<%= @law.legal_id %></span>
+			-->
+
+			<div class="nav_arrows">
+        <% if @prev_law %>
+          <a href="/laws/<%= @prev_law.legal_id %>">
+            <img id="left"  width="30px" src="/assets/left_arrow.png"  alt="Previous" >
+          </a>
+        <% end %>
+        <% if @next_law %>
+          <a href="/laws/<%= @next_law.legal_id %>">
+            <img id="right" width="30px" src="/assets/right_arrow.png" alt="Next"     >
+          </a>
+        <% end %>
+			</div>
+
+			<br style="clear:both">
+			<p class="law-title"><!-- § -->
+				<%=
+					if @law.legal_id.starts_with? "790"
+						"Rule #{@law.legal_id}. #{@law.title}"
+					elsif @law.legal_id.starts_with? "A"
+						"#{@law.legal_id}. #{@law.title}"
+					else
+						"Section #{@law.legal_id}. #{@law.title}"
+					end
+				%>
+			</p>
+			<div class="law-content">
+				<%= raw @law.content %>
+			</div>
+
+			<div class="nav_arrows">
+        <% if @prev_law %>
+          <a href="/laws/<%= @prev_law.legal_id %>">
+            <img id="left"  width="30px" src="/assets/left_arrow.png"  alt="Previous" >
+          </a>
+        <% end %>
+        <% if @next_law %>
+          <a href="/laws/<%= @next_law.legal_id %>">
+            <img id="right" width="30px" src="/assets/right_arrow.png" alt="Next"     >
+          </a>
+        <% end %>
+			</div>
+
+		<% else %>
+			<h1 class="law-legalid" style="float: none; text-align: center;">Welcome</h1>
+			<p class="law-title" style="text-align:center">
+				Welcome to the Alabama Real Estate License Law Online.<br />
+				Please use the menu above to browse the license law.
+			</p>
+		<% end %>
+
+	</div>
+</div>
+
+<%= content_for :caboose_css do %>
+<style type='text/css'>
+#content .law-content ol { list-style-type: none; }
+#content .law-content ol li:first-of-type { counter-reset: section;}
+#content .law-content ol li { counter-increment: section; }
+#content .law-content ol[type='I'] > li:before { content: "(" counter(section, upper-roman) ") " !important; }
+#content .law-content ol[type='i'] > li:before { content: "(" counter(section, lower-roman) ") " !important; }
+#content .law-content ol[type='A'] > li:before { content: "(" counter(section, upper-alpha) ") " !important; }
+#content .law-content ol[type='a'] > li:before { content: "(" counter(section, lower-alpha) ") " !important; }
+#content .law-content ol[type='1'] > li:before { content: "(" counter(section, decimal) ") " !important; }
+// #content .law-content ol li li:before { content: "(" counter(section, decimal) ") " !important; }
+</style>
+<% end %>
+
+<%= content_for :caboose_js do %>
+<% if @is_logged_in && !@index %>  
+	<script type='text/javascript'>
+		var seen = false;
+		
+		function add_bookmark(law_id)
+		{
+		  $.ajax({
+				url: "/bookmarks",
+				type: 'post',
+				data: { law_id: law_id },
+				success: function(bookmark) {
+					$("#add_bookmark").hide(); 
+					$("#remove_bookmark").show();					
+					$("#remove_bookmark").click( function(e) { e.preventDefault(); remove_bookmark(bookmark.id); });					
+				}
+			});
+		}
+		function remove_bookmark(bookmark_id)
+		{
+		  $.ajax({
+			  url: "/bookmarks/" + bookmark_id,
+			  type: 'delete',
+			  success: function(resp) {
+					$("#remove_bookmark").hide(); 
+					$("#add_bookmark").show();					
+				}
+			});
+		}
+		
+		$(document).ready(function() {		
+		  $("#add_bookmark").click( function(e) { e.preventDefault(); add_bookmark(<%= @law.id %>); });
+		  <% if @bookmark %>$("#remove_bookmark").click( function(e) { e.preventDefault(); remove_bookmark(<%= @bookmark.id %>); });<% end %>
+		});
+	</script>
+<% else %>
+	<script type='text/javascript'>
+		$("#login_btn").click(function(event) {
+			event.preventDefault(); 
+			open_colorbox(); 
+		}); 
+
+		function open_colorbox() {
+		  $.colorbox({
+		    href: '/login?return_url=/laws',
+		    iframe: true,
+		    innerWidth: 200,
+		    innerHeight:  50,
+		    scrolling: false,
+		    transition: 'fade',
+		    closeButton: false,
+		    onComplete: fix_colorbox,
+		    opacity: 0.50,
+		  //  onClosed: function() { open_colorbox(); }   
+		  });
+		}
+
+		function fix_colorbox() {
+		  $("#cboxTopLeft"      ).css('background', '#111');
+		  $("#cboxTopRight"     ).css('background', '#111');
+		  $("#cboxBottomLeft"   ).css('background', '#111');
+		  $("#cboxBottomRight"  ).css('background', '#111');
+		  $("#cboxMiddleLeft"   ).css('background', '#111');
+		  $("#cboxMiddleRight"  ).css('background', '#111');
+		  $("#cboxTopCenter"    ).css('background', '#111');
+		  $("#cboxBottomCenter" ).css('background', '#111');
+		  $("#cboxClose"        ).hide(); 
+		}
+	</script>
+<% end %>
+<% end %>
